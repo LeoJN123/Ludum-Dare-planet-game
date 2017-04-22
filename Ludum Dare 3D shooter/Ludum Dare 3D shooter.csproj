@@ -78,6 +78,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\bulletBehavior.cs" />
+    <Compile Include="Assets\Scripts\bulletExplosionScript.cs" />
+    <Compile Include="Assets\Scripts\enemyBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\playerBehaviourScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
