@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerBehaviourScript : MonoBehaviour {
 
+    public float maxHealh;
+    public float health;
     public float movePower;
     public float jumpPower;
     public float mouseSens;

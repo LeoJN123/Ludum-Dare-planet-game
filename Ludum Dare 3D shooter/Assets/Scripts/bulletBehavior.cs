@@ -6,6 +6,7 @@ public class bulletBehavior : MonoBehaviour {
 
     public float bulletSpeed;
     public float bulletDecay;
+    public float bulletDamage;
     public GameObject explosion;
 
 	// Use this for initialization
@@ -22,5 +23,8 @@ public class bulletBehavior : MonoBehaviour {
 
         Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
+        if (collision.GetComponent<enemyBehaviourScript>() != null) {
+            collision.GetComponent<enemyBehaviourScript>().Damage(bulletDamage);
+        }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\bulletExplosionScript.cs" />
     <Compile Include="Assets\Scripts\enemyBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\playerBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\spawnerScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
