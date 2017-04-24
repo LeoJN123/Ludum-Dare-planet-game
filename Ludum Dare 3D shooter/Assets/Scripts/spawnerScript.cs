@@ -16,6 +16,15 @@ public class spawnerScript : MonoBehaviour {
     public GameObject enemy;
     public GameObject[] spawnPoints;
     public WaveState currentState = WaveState.Intermission;
+    enemyBehaviourScript sEnemy;
+    moneyBehaviour sMoney;
+    public GameObject player;
+    public GameObject money;
+
+    private void Awake() {
+        sMoney = money.GetComponent<moneyBehaviour>();
+        sEnemy = enemy.GetComponent<enemyBehaviourScript>();
+    }
 
     void Update() {
 
@@ -32,7 +41,7 @@ public class spawnerScript : MonoBehaviour {
             //When wave is in progress, spawn enemies.
             if (enemiesToSpawn > 0) {
                 SpawnEnemy();
-            } else if (enemiesToSpawn == 0 && enemyList.Count == 0) {
+            } else if (enemiesToSpawn <= 0 && enemyList.Count <= 0) {
                 WaveEnd();
             }
             
@@ -54,10 +63,18 @@ public class spawnerScript : MonoBehaviour {
 
         //Making monsters spawn quicker!
 
-        //Multiply enemy number with difficulty
+        //Multiply shit with the difficulty
         enemiesInTotal = enemiesInTotal * difficultyRaiser;
         enemiesToSpawn = enemiesInTotal;
-        enemySpawnTickTime = enemySpawnTickTime / spawnTickTimeDecreaser;
+        enemySpawnTickTime = enemySpawnTickTime * spawnTickTimeDecreaser;
+
+        sEnemy.enemyDamage = sEnemy.enemyDamage * difficultyRaiser;
+        sEnemy.EnemyRiches = sEnemy.EnemyRiches * difficultyRaiser;
+        sEnemy.enemySpeed = sEnemy.enemySpeed * difficultyRaiser;
+        sEnemy.health = sEnemy.health * difficultyRaiser;
+        sEnemy.impulseTickTime = sEnemy.impulseTickTime * 0.995f;
+
+        sMoney.myValue = sMoney.myValue * difficultyRaiser;
 
     }
 
@@ -80,7 +97,7 @@ public class spawnerScript : MonoBehaviour {
             while (spawnTick >= enemySpawnTickTime) {
                 spawnTick = spawnTick - enemySpawnTickTime;
                 
-                    GameObject newEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+                    GameObject newEnemy = Instantiate(enemy, spawnPoints[Random.Range(0,3)].transform.position, Quaternion.identity);
                     enemiesToSpawn--;
                 
             }

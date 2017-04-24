@@ -78,10 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ShopBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\bulletBehavior.cs" />
     <Compile Include="Assets\Scripts\bulletExplosionScript.cs" />
     <Compile Include="Assets\Scripts\enemyBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\gameManager.cs" />
+    <Compile Include="Assets\Scripts\moneyBehaviour.cs" />
     <Compile Include="Assets\Scripts\playerBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\spawnerScript.cs" />
   </ItemGroup>

@@ -6,10 +6,17 @@ public class enemyBehaviourScript : MonoBehaviour {
 
 	public float enemySpeed;
     public float health;
-    public float MaxHealth;
     public float enemyDamage;
+    public float EnemyRiches;
+    public float enemyPushForce;
+    public float impulseTickTime;
+    private float impulseTick = 5;
+    public ForceMode movementForceMode;
+    Rigidbody rb;
     GameObject player;
+    public GameObject money;
     spawnerScript spawnScript;
+    Vector3 target;
 
     private void Awake() {
         //Finding Target
@@ -20,10 +27,12 @@ public class enemyBehaviourScript : MonoBehaviour {
 
         //Adding ourself to the list
         spawnScript.enemyList.Add(gameObject);
+
+        rb = GetComponent<Rigidbody>();
     }
 
 
-    private void Update() {
+    private void FixedUpdate() {
 
         //Moving ourself
         Movement();
@@ -46,8 +55,15 @@ public class enemyBehaviourScript : MonoBehaviour {
         //Removing ourselves from the list of living enemies
         spawnScript.enemyList.Remove(gameObject);
 
+        //Drop money
+        for (int i = 0; i < EnemyRiches; i++) {
+            Instantiate(money, transform.position, Quaternion.identity);
+        }
+
         //Death
         Destroy(gameObject);
+
+        
     }
 
     public void Movement() {
@@ -56,13 +72,24 @@ public class enemyBehaviourScript : MonoBehaviour {
 
         transform.LookAt(player.transform);
 
-        transform.Translate(Vector3.forward * enemySpeed * Time.deltaTime);
+        target = player.transform.position - transform.position;
+
+        impulseTick += Time.deltaTime;
+
+        while (impulseTick >= impulseTickTime) {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(target.normalized * enemySpeed, movementForceMode);
+            impulseTick -= impulseTickTime;
+        }
+
+        
     }
     
-    private void OnTiggerEnter(Collider collision) {
-        if (collision.gameObject.tag == "Player") {
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.name == "Player") {
             collision.gameObject.GetComponent<playerBehaviourScript>().Damaged(enemyDamage);
             print("We're hitting the player!!");
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(target.normalized * enemyPushForce, ForceMode.Impulse);
         }
     }
 

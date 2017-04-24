@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerBehaviourScript : MonoBehaviour {
 
     public enum GameState { Paused, Playing };
 
-    public float maxHealh;
+    public GameState state;
     public float health;
     public float movePower;
     public float maxJumpPower;
@@ -16,8 +17,10 @@ public class playerBehaviourScript : MonoBehaviour {
     public float gunRange;
     public float Spread;
     public float fireInterval;
+    public float Ammo;
+    public float MaxAmmo;
     private float fireTimer;
-    public GameState state;
+    public float Money;
     bool canFire;
     bool grounded;
     public GameObject planet;
@@ -35,7 +38,6 @@ public class playerBehaviourScript : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         cam = Camera.main;
         muzzleEmit.Stop();
-        state = GameState.Playing;
     }
 
     private void FixedUpdate() {
@@ -62,9 +64,8 @@ public class playerBehaviourScript : MonoBehaviour {
 
     public void Damaged(float damage) {
         health -= damage;
-        print("Our health: " + health);
         if (health <= 0) {
-            print("You're supposed to be dead by now");
+            Die();
         }
     }
 
@@ -167,5 +168,14 @@ public class playerBehaviourScript : MonoBehaviour {
                 jumpPower = maxJumpPower;
             }
         }
+    }
+
+    public void CollectMoney(float money) {
+        Money += money;
+        //play a sound perhaps?
+    }
+
+    public void Die() {
+        SceneManager.LoadScene(0);
     }
 }
